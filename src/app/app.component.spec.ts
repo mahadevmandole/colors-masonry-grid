@@ -1,12 +1,17 @@
-import { TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
+import { HttpService } from './http-service';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [HttpClientModule],
       declarations: [
         AppComponent
       ],
+      providers: [HttpService],
     }).compileComponents();
   });
 
@@ -16,16 +21,22 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'colors-masonry-grid'`, () => {
+  it(`Search input element should be rendered`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('colors-masonry-grid');
+    let input = fixture.debugElement.query(By.css('#searchInput'));
+    expect(input).toBeTruthy();
   });
 
-  it('should render title', () => {
+  it('On click event handler should have been called', fakeAsync(() => {
     const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('colors-masonry-grid app is running!');
-  });
+    const component = fixture.componentInstance;
+    spyOn(component, 'getSearchResult');
+  
+    let button = fixture.debugElement.nativeElement.querySelector('#click-button');
+    button.click();
+    tick();
+    expect(component.getSearchResult).toHaveBeenCalled();
+  
+  }));
 });

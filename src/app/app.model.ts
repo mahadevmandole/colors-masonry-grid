@@ -1,5 +1,5 @@
 interface ColorShade {
-    image:string;
+    img:string;
     color:string;
     light:boolean
 }
