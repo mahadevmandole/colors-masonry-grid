@@ -18,10 +18,18 @@ export class AppComponent {
    * Flag to show loader
    * @type {boolean}
    */
-  isLoading:boolean ;
+  isLoading: boolean;
+
+  /**
+  * Flag to show invalid state
+  * @type {boolean}
+  */
+  inValid: boolean;
 
   constructor(private httpService: HttpService) {
     this.isLoading = false;
+    this.inValid = false;
+
   }
 
   /**
@@ -29,11 +37,17 @@ export class AppComponent {
    * @param {string} searchQuery - Search string.
    */
   getSearchResult(searchQueryString: string) {
-    this.isLoading = true;
-    const url = 'https://backend.picular.co/api/search?query='+ searchQueryString;
-    this.httpService.fetchData(url).subscribe((data) => {
-      this.isLoading = false;
-      this.searchResult = data;
-    })
+    if (searchQueryString) {
+      this.isLoading = true;
+      this.inValid = false;
+      const url = 'https://backend.picular.co/api/search?query=' + searchQueryString;
+      this.httpService.fetchData(url).subscribe((data) => {
+        this.isLoading = false;
+        this.searchResult = data;
+      })
+    } else {
+      this.inValid = true;
+    }
+
   }
 }

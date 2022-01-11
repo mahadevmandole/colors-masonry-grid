@@ -5,7 +5,7 @@ import { HttpService } from './http-service';
 import { MockResult } from './mock/result.response';
 
 
-describe('Http Service', () => {
+describe('Http fetch data Service', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [HttpClientTestingModule],
@@ -13,7 +13,7 @@ describe('Http Service', () => {
         });
     });
 
-    it('should create', inject([HttpService], (service: HttpService) => {
+    it('should create service', inject([HttpService], (service: HttpService) => {
         expect(service).toBeTruthy();
     }));
 

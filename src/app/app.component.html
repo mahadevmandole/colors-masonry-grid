@@ -12,8 +12,8 @@
   </div>
   <!-- Resources -->
   <div class="search-container">
-    <input id="searchInput" #queryStrng type="text">
-    <button id="click-button" (click)="getSearchResult(queryStrng.value)">Search</button>
+    <input class="search-input" [ngClass]="{'invalid': inValid}" id="searchInput" #queryStrng type="text">
+    <button class="search-btn ml" id="click-button" (click)="getSearchResult(queryStrng.value)">Search</button>
   </div>
 
   <ul class="card-container">
