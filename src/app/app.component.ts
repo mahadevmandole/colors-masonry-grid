@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import { ColorResult } from './app.model';
 import { HttpService } from './http-service';
 import { debounceTime, filter, map } from "rxjs/operators";
-import { fromEvent } from 'rxjs';
+import { fromEvent, Observable } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -22,9 +22,9 @@ export class AppComponent implements AfterViewInit {
   isLoading: boolean;
 
   /**
-  * Get input search field reference
-  * @type {boolean}
-  */
+    * Get input search field reference
+    * @type {ElementRef}
+    */
   @ViewChild('searchInputField')
   searchInputField!: ElementRef;
 
@@ -33,6 +33,11 @@ export class AppComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
+
+  /**
+    * Observable to listen user input
+    * @type {Observable}
+    */
     fromEvent(this.searchInputField.nativeElement, 'input')
       .pipe(
         map((evt: any) => evt.target.value),
